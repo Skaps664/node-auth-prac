@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Sign Up</h1>
+    <form id="sign_up-form">
+      <input
+        type="text"
+        placeholder="Username"
+        id="Username"
+        autocomplete="off"
+      />
+      <input
+        type="password"
+        placeholder="password"
+        id="Password"
+        autocomplete="off"
+      />
+      <input type="submit" value="Sign-Up Form" />
+    </form>
+
+    <script>
+      const form = document.getElementById("sign_up-form");
+      form.addEventListener("submit", registerUser);
+
+      async function registerUser(event) {
+        event.preventDefault(); // to stay on page not not default the values
+        const username = document.getElementById("Username").value;
+        const password = document.getElementById("Password").value;
+
+        // using json to send data from form to server
+        //fetch is default func from browsers, to use we need to async
+
+        const result = await fetch("/api/sign-up", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+        }).then((res) => res.json());
+        console.log(result);
+      }
+    </script>
+  </body>
+</html>
